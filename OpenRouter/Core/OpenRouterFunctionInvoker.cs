@@ -140,13 +140,13 @@ internal static class OpenRouterFunctionInvoker
                     functionName: functionCall.FunctionName,
                     pluginName: functionCall.PluginName,
                     callId: functionCall.Id,
-                    result: functionResult.ToString()));
+                    result: functionResult.Result));
 
                 logger.LogDebug(
                     "Function {PluginName}.{FunctionName} invoked successfully with result: {Result}",
                     functionCall.PluginName,
                     functionCall.FunctionName,
-                    functionResult.ToString());
+                    functionResult.Result?.ToString());
             }
             catch (Exception ex)
             {
