@@ -7,6 +7,7 @@ using SemanticKernel.Connectors.OpenRouter.Core;
 using SemanticKernel.Connectors.OpenRouter.Models;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 
@@ -626,8 +627,9 @@ public sealed class OpenRouterChatCompletionService : IChatCompletionService, IT
     private static bool ShouldAutoInvokeFunctions(FunctionChoiceBehavior functionChoiceBehavior)
     {
         // Use reflection to access the AutoInvoke property
-        var autoInvokeProperty = functionChoiceBehavior.GetType().GetProperty("AutoInvoke");
-        if (autoInvokeProperty?.GetValue(functionChoiceBehavior) is bool autoInvoke)
+        var autoInvokeField = functionChoiceBehavior.GetType().GetField("AutoInvoke",
+            BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+        if (autoInvokeField?.GetValue(functionChoiceBehavior) is bool autoInvoke)
         {
             return autoInvoke;
         }
