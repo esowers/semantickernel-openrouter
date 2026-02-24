@@ -1,5 +1,4 @@
 using SemanticKernel.Connectors.OpenRouter.Models;
-using System.Text;
 
 namespace SemanticKernel.Connectors.OpenRouter.Core;
 

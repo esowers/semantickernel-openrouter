@@ -1,5 +1,3 @@
-using System.ComponentModel;
-using System.Text.Json;
 using Microsoft.SemanticKernel;
 using SemanticKernel.Connectors.OpenRouter.Models;
 

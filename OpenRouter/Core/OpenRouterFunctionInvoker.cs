@@ -1,7 +1,6 @@
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.Extensions.Logging;
-using System.Diagnostics;
 using System.Reflection;
 
 namespace SemanticKernel.Connectors.OpenRouter.Core;
@@ -56,11 +55,12 @@ internal static class OpenRouterFunctionInvoker
             var results = await service.GetChatMessageContentsInternalAsync(workingHistory, executionSettings, kernel, cancellationToken);
             allResults.AddRange(results);
 
-            var result = results.FirstOrDefault();
-            if (result == null)
+            if (results.Count == 0 )
             {
                 break;
             }
+
+            var result = results[0];
 
             // Add assistant response to working history
             workingHistory.Add(result);

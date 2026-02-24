@@ -1,7 +1,6 @@
 using Microsoft.Extensions.Logging;
 using SemanticKernel.Connectors.OpenRouter.Exceptions;
 using SemanticKernel.Connectors.OpenRouter.Models;
-using System.Diagnostics;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Text;

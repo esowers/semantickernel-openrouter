@@ -314,8 +314,8 @@ public sealed class OpenRouterChatCompletionService : IChatCompletionService, IT
         // Handle function calling
         if (kernel != null && executionSettings is { FunctionChoiceBehavior: not null })
         {
-            var functions = GetEnabledFunctions(executionSettings.FunctionChoiceBehavior, kernel.Plugins);
-            if (functions.Any())
+            var functions = GetEnabledFunctions(executionSettings.FunctionChoiceBehavior, kernel.Plugins).ToList().AsReadOnly();
+            if (functions.Count != 0)
             {
                 request.Tools = OpenRouterFunctionHelpers.ConvertToOpenRouterTools(functions);
                 request.ToolChoice = OpenRouterFunctionHelpers.ConvertFunctionChoiceBehaviorToToolChoice(
