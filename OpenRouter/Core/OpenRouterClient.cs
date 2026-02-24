@@ -13,6 +13,7 @@ public sealed class OpenRouterClient
 {
     private const string DefaultBaseUrl = "https://openrouter.ai";
     private const string ChatCompletionsEndpoint = "/api/v1/chat/completions";
+    private const string GenerationEndpoint = "/api/v1/generation";
 
     private readonly HttpClient _httpClient;
     private readonly ILogger _logger;
@@ -215,7 +216,7 @@ public sealed class OpenRouterClient
             // Small delay to ensure generation details are available
             await Task.Delay(100, cancellationToken);
 
-            var generationUri = new Uri(_baseUrl, $"/generation?id={generationId}");
+            var generationUri = new Uri(_baseUrl, $"{GenerationEndpoint}?id={generationId}");
             using var request = new HttpRequestMessage(HttpMethod.Get, generationUri);
 
             using var response = await _httpClient.SendAsync(request, cancellationToken);
@@ -226,6 +227,7 @@ public sealed class OpenRouterClient
             }
 
             var content = await response.Content.ReadAsStringAsync(cancellationToken);
+            _logger.LogDebug("Received generation details for {GenerationId}: {Content}", generationId, content);
             var generationResponse = JsonSerializer.Deserialize<OpenRouterGenerationResponse>(content, JsonOptions);
 
             if (generationResponse?.Data != null)
